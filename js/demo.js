@@ -76,15 +76,36 @@
                 charming(item);
                 const letters = [...item.querySelectorAll('span')];
 
-                this.DOM.menuLinks.forEach((item, pos) => {
-                 
+              
+                const mouseenterFn = () => {
+                    if ( this.current !== -1 ) {
+                       TweenMax.set(this.DOM.imgs[this.current], {opacity: 0});
+                    }
+                    this.current = pos;
 
-      observer.unobserve(entry.target);
-    }
-  });
-}, {
-  threshold: 0.3
-});
+                    if ( this.fade ) {
+                        TweenMax.to(this.DOM.imgs[this.current], 0.5, {ease: Quad.easeOut, opacity: 1});
+                        this.fade = false;
+                    }
+                    else {
+                        TweenMax.set(this.DOM.imgs[this.current], {opacity: 1});
+                    }
+                    
+                    TweenMax.staggerTo(letters, 0.2, {
+                        ease: Sine.easeInOut,
+                        y: this.lastMousePos.translation.y < this.mousePos.y ? 30 : -30,
+                        startAt: {opacity: 1, y: 0},
+                        opacity: 0,
+                        yoyo: true,
+                        yoyoEase: Back.easeOut,
+                        repeat: 1,
+                        stagger: {
+                            grid: [1,letters.length-1],
+                            from: 'center',
+                            amount: 0.12
+                        }
+                    });
+                };
 
 observer.observe(item);
 
