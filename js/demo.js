@@ -104,7 +104,7 @@
                         repeat: 1,
                         stagger: {
                             grid: [1,letters.length-1],
-                            from: 'center',
+                            from: 'left',
                             amount: 0.12
                         }
                     });
