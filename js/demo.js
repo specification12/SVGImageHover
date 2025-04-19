@@ -77,21 +77,36 @@
                 const letters = [...item.querySelectorAll('span')];
 
                 this.DOM.menuLinks.forEach((item, pos) => {
+                    const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      // Animate the letters in
+      TweenMax.staggerTo(letters, 0.6, {
+        ease: Power3.easeOut,
+        opacity: 1,
+        x: 0,
+        delay: 0.1,
+        stagger: {
+          amount: 0.3,
+          from: 'start'
+        }
+      });
+
+      observer.unobserve(entry.target);
+    }
+  });
+}, {
+  threshold: 0.3
+});
+
+observer.observe(item);
+
     // Create spans for each letter
     charming(item);
     const letters = [...item.querySelectorAll('span')];
 
     // ✨ Initial staggered animation from the left
-    TweenMax.staggerFrom(letters, 0.6, {
-        ease: Power3.easeOut,
-        x: -30,
-        opacity: 0,
-        delay: pos * 0.2, // Delay each menu item slightly
-        stagger: {
-            each: 0.03,
-            from: 'start'
-        }
-    }, 0);
+
 
     const mouseenterFn = () => {
         if (this.current !== -1) {
