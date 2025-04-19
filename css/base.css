@@ -320,8 +320,4 @@ a:focus {
 	}
 }
 
-.menu__link span {
-  display: inline-block;
-  transform: translateX(-20px);
-  opacity: 0;
-}
+
